@@ -1,4 +1,4 @@
-# video2image-opencv
+# Video to image frame using OpenCV 4.1.2
 This is a c++ program to convert a video to frames
 
 ## Compilation
