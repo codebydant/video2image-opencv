@@ -1,0 +1,86 @@
+##############################################################################
+# CMAKE CONFIGURATION
+##############################################################################
+cmake_minimum_required(VERSION 3.5.1 FATAL_ERROR)
+
+# set project name
+project(video2image VERSION 1 LANGUAGES CXX)
+
+# set build type = Release mode
+set(CMAKE_BUILD_TYPE Release)
+
+message("\n" "=========================================")
+message("Project: ${PROJECT_NAME} ")
+message("=========================================")
+
+# set the include directive in the same project folder
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
+# set corresponding package directories
+set(OpenCV_DIR /opt/opencv-4.1.2/build)
+
+#(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_CXX_STANDARD 11)
+
+##############################################################################
+# PACKAGES
+##############################################################################
+
+message("***********************")
+message("OpenCV pkg")
+message("***********************")
+
+find_package(OpenCV 4 PATHS ${OpenCV_DIR} QUIET)
+if(OpenCV_FOUND)
+   	message(STATUS "OpenCV status:")
+   	message(STATUS "    version: ${OpenCV_VERSION}")
+else()
+    message(WARNING "   OpenCV 4 not found, attempting 3...")
+    find_package(OpenCV 3.4.1 REQUIRED QUIET)
+    if(OpenCV_FOUND)
+        message(STATUS "OpenCV status:")
+   		message(STATUS "    version: ${OpenCV_VERSION}")
+    else()
+        message(FATAL_ERROR "    ERROR: OpenCV ${OpenCV_VERSION} not found")
+    endif()
+endif()
+
+##############################################################################
+# HEADERS
+##############################################################################
+include_directories(
+  ${OpenCV_INCLUDE_DIRS} 
+)
+
+include(CheckFunctionExists)
+
+##############################################################################
+# LIBRARIES PATH
+##############################################################################
+link_directories(
+	${OpenCV_LIBRARIES}              
+)
+
+##############################################################################
+# SOURCE CODE
+##############################################################################
+set(MAIN_SOURCE "src/video2image.cpp"
+)
+
+##############################################################################
+# EXECUTABLES
+##############################################################################
+add_executable(${PROJECT_NAME}             
+               ${MAIN_SOURCE}
+               )
+               
+##############################################################################
+# TARGET LIBRARIES
+##############################################################################
+target_link_libraries(${PROJECT_NAME}
+                      ${OpenCV_LIBS}
+               )    
+                
+message("=========================================")
+message("Project: ${PROJECT_NAME} COMPILED WITH CMAKE " ${CMAKE_VERSION})
+message("=========================================")
