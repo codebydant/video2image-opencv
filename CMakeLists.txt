@@ -15,7 +15,7 @@ message("=========================================")
 set(OpenCV_DIR /opt/opencv-4.1.2/build)
 # set bin folder ON/OFF
 # (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-
+set(CMAKE_CXX_STANDARD 11)
 ##############################################################################
 # LIBRARIES CONFIG FILE
 ##############################################################################
